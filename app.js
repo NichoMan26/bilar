@@ -113,6 +113,8 @@ console.log('r: ', r);
 })
 
 app.post('/report', urlencodedParser, (req, res) => {
+  console.log('req.body: ', req.body);
+  
   if(!req.body) return res.sendStatus(400)
   let fromTS =  new Date(req.body.from).getTime()
   let toTS =  new Date(req.body.to).getTime()
@@ -120,6 +122,7 @@ app.post('/report', urlencodedParser, (req, res) => {
   let queryDate = ` id BETWEEN ${fromTS} AND ${toTS}`
   let queryService = ''
   let queryWasher = ''
+  let queryShop = ''
   let queryCreater = ''
   let queryPlace = ''
   if(req.body.service !== 'All'){
@@ -134,8 +137,11 @@ app.post('/report', urlencodedParser, (req, res) => {
     queryWasher += ` AND washer = '${req.body.washer}'`
     queryCreater += ` AND creater = '${req.body.washer}'`
   } 
+  if(req.body.shop !== 'All'){
+    queryShop += ` AND shop = '${req.body.shop}'`
+  } 
   
-  query += queryDate + queryService + queryPlace + queryWasher + ' OR' + queryDate + queryCreater  + queryService + queryPlace
+  query += queryDate + queryService + queryPlace + queryWasher  + queryShop + ' OR' + queryDate + queryCreater + queryService + queryPlace + queryShop
   console.log('query: ', query);
   conn.query(query, (err,result) => {
     if(err) {
