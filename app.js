@@ -17,17 +17,12 @@ const urlencodedParser = bodyParser.json();
 const users = require('./models/users')
 const cars = require('./models/cars')
 
-// const conn = mysql.createConnection({
-//   host:'basenkodenis.ru',
-//   user:'u1055291_denis',
-//   database:'u1055291_bilar',
-//   password:'4AdZWykWQb6any7',
-// })
+
 
 app.use(express.urlencoded({extended:true}))
       async function start() {
           try {
-              await mongoose.connect('mongodb+srv://basenkodenis:CsXspZG1m9kdx63B@cluster0.ydkxs.mongodb.net/bilar', {
+              await mongoose.connect('SECRET', {
               })
               server.listen(PORT, () => {
                   console.log(`Server has been started on ${PORT}`);
